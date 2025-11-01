@@ -1,0 +1,49 @@
+name: Build docker images
+
+on:
+  push:
+    branches:
+    - main
+    tags:
+    - v*
+
+jobs:
+
+  elemana-admin:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Check secret availability
+        run: |
+          if [ -z "${{ secrets.NEW_DOCKER_REGISTRY_SECRET }}" ]; then
+            echo "NEW_DOCKER_REGISTRY_SECRET is empty"
+          else
+            echo "NEW_DOCKER_REGISTRY_SECRET is available"
+          fi
+
+      - name: Log in to GitHub Container Registry
+        env:
+          DOCKER_PASSWORD: ${{ secrets.NEW_DOCKER_REGISTRY_SECRET }}
+        run: |
+          docker login ghcr.io -u "mohamedsalem66" --password-stdin <<< "$DOCKER_PASSWORD"
+
+      - name: check if docker image exist
+        id: check_image
+        run: |
+          export IMGNAME=ghcr.io/mohamedsalem66/elemana-admin && \
+          export IMGTAG=$(git ls-files -s . | git hash-object --stdin) && \
+          docker manifest inspect $IMGNAME:$IMGTAG > /dev/null || export exit_code=$? && \
+          echo exit_code=$exit_code >> $GITHUB_OUTPUT
+
+      - name: build docker image
+        if: steps.check_image.outputs.exit_code != 0
+        run: |
+          export tag=$(git ls-files -s . | git hash-object --stdin) && \
+          docker build --tag ghcr.io/mohamedsalem66/elemana-admin:$tag . && \
+          docker push ghcr.io/mohamedsalem66/elemana-admin:$tag

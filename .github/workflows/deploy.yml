@@ -1,0 +1,86 @@
+name: Deploy on Kubernetes
+
+on:
+  workflow_dispatch:
+    inputs:
+      DEPLOY_VERSION:
+        description: 'Tag Version (v0.0.1)'
+        required: true
+      ENV:
+        type: choice
+        description: 'Environment'
+        required: false
+        options:
+          - staging
+          - production
+        default: 'staging'
+
+jobs:
+  deploy:
+    name: "Deploying ${{ github.event.inputs.DEPLOY_VERSION }} to ${{ github.event.inputs.ENV }} by ${{ github.actor }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - if: ${{ github.event.inputs.DEPLOY_VERSION != 'main' }}
+        run: |
+          export version=${{ github.event.inputs.DEPLOY_VERSION }} && \
+          if git ls-remote origin refs/tags/$version |grep $version
+          then
+              echo "Tag exists! Proceeding to deploy."
+          else
+              echo "Tag doesn't exist."
+              exit 1
+          fi
+
+      - name: Kustomize
+        uses: danielr1996/kubectl-action@1.0.0
+
+      - id: secret_name
+        run: |
+          echo "::set-output name=KUBE_CONFIG::KUBE_CONFIG_STAGING"
+
+      - name: Prepare kubeconfig
+        env:
+          KUBECONFIG: ${{ secrets[steps.secret_name.outputs.KUBE_CONFIG] }}
+        run: |
+          mkdir -p ~/.kube/
+          echo "${KUBECONFIG}" | base64 -d > ~/.kube/config
+          export KUBECONFIG=~/.kube/config
+
+      - name: Validate Kubernetes Access
+        run: kubectl get nodes
+
+      - name: Checkout to ${{ github.event.inputs.DEPLOY_VERSION }}
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.DEPLOY_VERSION }}
+
+      - name: Calculate images
+        run: |
+          git status
+          export TAG_ELEMANA=$(git ls-files -s . | git hash-object --stdin)
+
+          cd k8s/${{github.event.inputs.ENV}}
+
+          kustomize edit set image ghcr.io/mohamedsalem66/elemana-admin=ghcr.io/mohamedsalem66/elemana-admin:$TAG_ELEMANA
+
+      - name: Annotate namespaces
+        run: |
+          cat <<EOT >> k8s/${{github.event.inputs.ENV}}/kustomization.yaml
+          patches:
+            - patch: |-
+                - op: add
+                  path: "/metadata/annotations"
+                  value:
+                    frontendVersion: "${{ github.event.inputs.DEPLOY_VERSION }}"
+              target:
+                  kind: Namespace
+          EOT
+
+      - name: Generate final k8s manifest file
+        run: kustomize build k8s/${{github.event.inputs.ENV}} > deploy.yaml
+
+      - name: Deploy to Kubernetes ${{github.event.inputs.ENV}}
+        run: |
+          kubectl apply -f deploy.yaml --validate=false

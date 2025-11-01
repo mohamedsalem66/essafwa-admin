@@ -1,0 +1,12 @@
+bases:
+    - ../base
+
+namespace: prestige-optique
+resources:
+    - namespace.yaml
+    - ingress.yaml
+    - regcred.yaml
+
+patchesStrategicMerge:
+    - elemana-admin.yaml
+

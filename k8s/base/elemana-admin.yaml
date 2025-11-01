@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elemana-admin
+  labels:
+    app: elemana-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elemana-admin
+  template:
+    metadata:
+      labels:
+        app: elemana-admin
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: elemana-admin
+        image: ghcr.io/mohamedsalem66/elemana-admin:0.1-SNAPSHOT
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: elemana-admin
+spec:
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: elemana-admin
