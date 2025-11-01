@@ -5,7 +5,7 @@ import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import {useTranslation} from "react-i18next";
 import {AnimatePresence, motion} from "framer-motion";
-import {ElemanaOrderApi} from "@/app/api/ElemanaOrderApi";
+import {EssafwaOrderApi} from "@/app/api/EssafwaOrderApi";
 import {CategoryApi} from "@/app/api/categoryApi";
 import Switch from "@/components/form/switch/Switch";
 import { toast } from "react-toastify";
@@ -15,7 +15,7 @@ import CategorySelect from "@/components/CategorySelect";
 import { HiOutlinePrinter } from "react-icons/hi";
 import BackToMenu from "@/components/common/BackToMenu";
 
-interface ElemanaOrder {
+interface EssafwaOrder {
     id: number;
     clientName: string;
     clientTel: string;
@@ -106,10 +106,10 @@ interface LoadingStates {
     [key: number]: boolean;
 }
 
-export default function ElemanaOrders() {
+export default function EssafwaOrders() {
     const {t,i18n } = useTranslation();
     const isRTL = i18n.dir() === "rtl";
-    const [orders, setOrders] = useState<ElemanaOrder[]>([]);
+    const [orders, setOrders] = useState<EssafwaOrder[]>([]);
     const [loading, setLoading] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [categories, setCategories] = useState<Category[]>([]);
@@ -167,9 +167,9 @@ export default function ElemanaOrders() {
     const fetchOrders = async () => {
         setLoading(true);
         try {
-            const response = await ElemanaOrderApi.getAll();
+            const response = await EssafwaOrderApi.getAll();
             const allOrders = response?.data || [];
-            const sortedOrders = allOrders.sort((a: ElemanaOrder, b: ElemanaOrder) => b.id - a.id);
+            const sortedOrders = allOrders.sort((a: EssafwaOrder, b: EssafwaOrder) => b.id - a.id);
             setOrders(sortedOrders);
         } catch (error) {
             console.error("Failed to fetch orders:", error);
@@ -242,7 +242,7 @@ export default function ElemanaOrders() {
                 }
             };
 
-            const response = await ElemanaOrderApi.createOrder(payload);
+            const response = await EssafwaOrderApi.createOrder(payload);
 
             if (response) {
                 await fetchOrders();
@@ -258,7 +258,7 @@ export default function ElemanaOrders() {
 
                         if (newOrderData.sendToWhatsapp) {
                             try {
-                                await ElemanaOrderApi.sendInvoice(response.data.id);
+                                await EssafwaOrderApi.sendInvoice(response.data.id);
                             } catch (whatsappError) {
                                 console.error("Failed to send to WhatsApp:", whatsappError);
                             }
@@ -283,7 +283,7 @@ export default function ElemanaOrders() {
         try {
             setLoadingStates(prev => ({ ...prev, [orderId]: true }));
 
-            const response = await ElemanaOrderApi.getInvoice(orderId);
+            const response = await EssafwaOrderApi.getInvoice(orderId);
             const pdfData = response.data;
 
             if (!pdfData?.fileSource) {
@@ -535,7 +535,7 @@ export default function ElemanaOrders() {
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div className="flex items-center gap-4">
                         <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-                            {t("Elemana Orders")} ({filteredOrders.length})
+                            {t("Essafwa Orders")} ({filteredOrders.length})
                         </h1>
                         <div className="flex items-center gap-2 bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded-lg">
                             <svg
@@ -787,7 +787,7 @@ export default function ElemanaOrders() {
                                     onClick={() => toggleRowExpand(order.id)}
                                 >
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                                        #{order.invoiceNumber} 
+                                        #{order.invoiceNumber}
                                     </td>
 
                                     <td className="px-6 py-4 whitespace-nowrap text-m text-gray-800 dark:text-gray-400">
@@ -1078,7 +1078,7 @@ export default function ElemanaOrders() {
 
                                         setPaying(true);
                                         try {
-                                           
+
                                             await AdminApi.payOrder(currentOrderId, finalAllPaid, finalPaidAmount);
 
                                             setIsPayModalOpen(false);

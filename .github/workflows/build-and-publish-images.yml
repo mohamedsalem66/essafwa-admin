@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-  elemana-admin:
+  Essafwa-admin:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +36,7 @@ jobs:
       - name: check if docker image exist
         id: check_image
         run: |
-          export IMGNAME=ghcr.io/mohamedsalem66/elemana-admin && \
+          export IMGNAME=ghcr.io/mohamedsalem66/essafwa-admin && \
           export IMGTAG=$(git ls-files -s . | git hash-object --stdin) && \
           docker manifest inspect $IMGNAME:$IMGTAG > /dev/null || export exit_code=$? && \
           echo exit_code=$exit_code >> $GITHUB_OUTPUT
@@ -45,5 +45,5 @@ jobs:
         if: steps.check_image.outputs.exit_code != 0
         run: |
           export tag=$(git ls-files -s . | git hash-object --stdin) && \
-          docker build --tag ghcr.io/mohamedsalem66/elemana-admin:$tag . && \
-          docker push ghcr.io/mohamedsalem66/elemana-admin:$tag
+          docker build --tag ghcr.io/mohamedsalem66/essafwa-admin:$tag . && \
+          docker push ghcr.io/mohamedsalem66/essafwa-admin:$tag

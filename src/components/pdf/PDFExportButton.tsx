@@ -43,13 +43,13 @@ const PDFExportButton: React.FC<PDFExportButtonProps> = ({
   const handleExportPDF = async () => {
     try {
       setIsGenerating(true);
-      
+
       // Validate orders data
       if (!orders || orders.length === 0) {
         alert('No orders data available to export.');
         return;
       }
-      
+
       // Clean and validate orders data
       const cleanedOrders = orders.map(order => ({
         ...order,
@@ -71,48 +71,48 @@ const PDFExportButton: React.FC<PDFExportButtonProps> = ({
           name: order.category.name || 'N/A'
         } : null
       }));
-      
+
       // Dynamically import the PDF component to avoid SSR issues
       const { default: ExternalOrdersPDF } = await import('./ExternalOrdersPDF');
-      
+
       // Create PDF blob with error handling
-      const pdfDoc = ExternalOrdersPDF({ 
-        orders: cleanedOrders, 
-        filter: filter || 'ALL', 
-        paymentFilter: paymentFilter || 'ALL', 
+      const pdfDoc = ExternalOrdersPDF({
+        orders: cleanedOrders,
+        filter: filter || 'ALL',
+        paymentFilter: paymentFilter || 'ALL',
         opticFilter: opticFilter || null
       });
-      
+
       // Add timeout to prevent hanging
       const pdfPromise = pdf(pdfDoc).toBlob();
-      const timeoutPromise = new Promise((_, reject) => 
+      const timeoutPromise = new Promise((_, reject) =>
         setTimeout(() => reject(new Error('PDF generation timeout')), 30000)
       );
-      
+
       const blob = await Promise.race([pdfPromise, timeoutPromise]) as Blob;
-      
+
       // Validate blob
       if (!blob || blob.size === 0) {
         throw new Error('Generated PDF is empty');
       }
-      
+
       // Create download link
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
       link.download = `external-orders-first-20-${new Date().toISOString().split('T')[0]}.pdf`;
-      
+
       // Trigger download
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      
+
       // Clean up
       URL.revokeObjectURL(url);
-      
+
     } catch (error) {
       console.error('Error generating PDF:', error);
-      
+
       // Try to create a simple fallback PDF
       try {
         const formatCurrency = (amount: number) => {
@@ -128,7 +128,7 @@ const PDFExportButton: React.FC<PDFExportButtonProps> = ({
             return `${amount || 0} TND`;
           }
         };
-        
+
         const fallbackDoc = (
           <Document>
             <Page size="A4" style={{ padding: 0, fontSize: 12 }}>
@@ -140,7 +140,7 @@ const PDFExportButton: React.FC<PDFExportButtonProps> = ({
                       الأمانة البصريات
                     </Text>
                     <Text style={{ fontSize: 14, color: '#e0e7ff' }}>
-                      El Emana Optique
+                      Essafwa Optique
                     </Text>
                   </View>
                   <View style={{ alignItems: 'flex-end' }}>
@@ -153,7 +153,7 @@ const PDFExportButton: React.FC<PDFExportButtonProps> = ({
                   </View>
                 </View>
               </View>
-              
+
               {/* Content */}
               <View style={{ padding: 30 }}>
                 <Text style={{ fontSize: 14, marginBottom: 15, fontWeight: 'bold', fontFamily: 'Tajawal' }}>
@@ -179,7 +179,7 @@ const PDFExportButton: React.FC<PDFExportButtonProps> = ({
             </Page>
           </Document>
         );
-        
+
         const fallbackBlob = await pdf(fallbackDoc).toBlob();
         const url = URL.createObjectURL(fallbackBlob);
         const link = document.createElement('a');
@@ -189,7 +189,7 @@ const PDFExportButton: React.FC<PDFExportButtonProps> = ({
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
-        
+
         alert('PDF generated with simplified format due to formatting issues.');
       } catch (fallbackError) {
         console.error('Fallback PDF generation failed:', fallbackError);

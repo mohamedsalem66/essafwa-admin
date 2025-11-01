@@ -3,7 +3,7 @@ import { Endpoints } from "@/app/api/Endpoints";
 
 const endPoint = `${Endpoints.NEXT_PUBLIC_API_URL}/elemana-orders`;
 
-export const ElemanaOrderApi = {
+export const EssafwaOrderApi = {
     getAll: () => {
         return apiClient.get(`${endPoint}`);
     },

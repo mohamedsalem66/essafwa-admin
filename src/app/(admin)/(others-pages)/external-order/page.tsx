@@ -923,7 +923,7 @@ export default function GlassesOrders() {
                             className="rounded-md border border-gray-300 dark:border-gray-600 p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         >
                             <option value="">{t("All Optics")}</option>
-                            <option value="null">{isRTL ? "الأمـانة للنظارات" : "El Emana Optique"}</option>
+                            <option value="null">{isRTL ? "الأمـانة للنظارات" : "Essafwa Optique"}</option>
                             {allOptics.map((optic) => (
                                 <option key={optic.id} value={optic.id}>
                                     {optic.name}
@@ -984,7 +984,7 @@ export default function GlassesOrders() {
                                             #{order.id} {order.factureId && `(F: ${order.factureId})`} - {order.clientName}
                                         </h3>
                                         <h3 className={`${isRTL ? 'text-m' : 'text-xs'} font-medium text-gray-800 dark:text-white`}>
-                                            {order?.optic?.opticName != null ? order.optic?.opticName : `${isRTL ? `الأمـانة للنظارات` : `El Emana Optique`}`}
+                                            {order?.optic?.opticName != null ? order.optic?.opticName : `${isRTL ? `الأمـانة للنظارات` : `Essafwa Optique`}`}
                                         </h3>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -1168,7 +1168,7 @@ export default function GlassesOrders() {
                                     </td>
 
                                     <td className="px-6 py-4 whitespace-nowrap text-m text-gray-800 dark:text-gray-400">
-                                        {order.optic?.opticName != null ? order.optic?.opticName : `${isRTL ? `الأمـانة للنظارات` : `El Emana Optique`}`}
+                                        {order.optic?.opticName != null ? order.optic?.opticName : `${isRTL ? `الأمـانة للنظارات` : `Essafwa Optique`}`}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-400">
                                         {order.totalPrice != null ? `${order.totalPrice} MRU` : '---'}

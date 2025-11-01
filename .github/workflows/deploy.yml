@@ -59,11 +59,11 @@ jobs:
       - name: Calculate images
         run: |
           git status
-          export TAG_ELEMANA=$(git ls-files -s . | git hash-object --stdin)
+          export TAG_ESSAFWA=$(git ls-files -s . | git hash-object --stdin)
 
           cd k8s/${{github.event.inputs.ENV}}
 
-          kustomize edit set image ghcr.io/mohamedsalem66/elemana-admin=ghcr.io/mohamedsalem66/elemana-admin:$TAG_ELEMANA
+          kustomize edit set image ghcr.io/mohamedsalem66/essafwa-admin=ghcr.io/mohamedsalem66/Essafwa-admin:$TAG_ESSAFWA
 
       - name: Annotate namespaces
         run: |

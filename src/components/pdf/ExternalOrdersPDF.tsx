@@ -244,11 +244,11 @@ interface ExternalOrdersPDFProps {
   opticFilter?: string | null;
 }
 
-const ExternalOrdersPDF: React.FC<ExternalOrdersPDFProps> = ({ 
-  orders, 
-  filter = "ALL", 
-  paymentFilter = "ALL", 
-  opticFilter = null 
+const ExternalOrdersPDF: React.FC<ExternalOrdersPDFProps> = ({
+  orders,
+  filter = "ALL",
+  paymentFilter = "ALL",
+  opticFilter = null
 }) => {
   // Filter orders based on current filters and limit to first 20
   const filteredOrders = orders.filter((order) => {
@@ -277,7 +277,7 @@ const ExternalOrdersPDF: React.FC<ExternalOrdersPDFProps> = ({
     }
     return true;
   });
-  
+
   const displayedOrders = filteredOrders.length;
   const totalOrders = allFilteredOrders.length;
   const pendingOrders = filteredOrders.filter(order => order.status === "PENDING").length;
@@ -341,16 +341,16 @@ const ExternalOrdersPDF: React.FC<ExternalOrdersPDFProps> = ({
         <View style={styles.header}>
           <View style={styles.headerContent}>
             <View style={styles.logoSection}>
-              <Image 
-                style={styles.logo} 
-                src="/images/logo/al_amana_logo.webp" 
+              <Image
+                style={styles.logo}
+                src="/images/logo/al_amana_logo.webp"
               />
               <View style={styles.companyInfo}>
                 <Text style={styles.companyNameArabic}>
                   الأمانة البصريات
                 </Text>
                 <Text style={styles.companyNameFrench}>
-                  El Emana Optique
+                  Essafwa Optique
                 </Text>
                 <Text style={styles.companySubtitle}>
                   Centre d'Optique Professionnel
@@ -381,9 +381,9 @@ const ExternalOrdersPDF: React.FC<ExternalOrdersPDFProps> = ({
         <View style={styles.content}>
 
           {/* Modern Summary */}
-          <View style={{ 
-            marginBottom: 20, 
-            padding: 15, 
+          <View style={{
+            marginBottom: 20,
+            padding: 15,
             backgroundColor: '#f8fafc',
             border: '1 solid #e2e8f0',
             borderRadius: 8
@@ -453,9 +453,9 @@ const ExternalOrdersPDF: React.FC<ExternalOrdersPDFProps> = ({
             </View>
           ) : (
             filteredOrders.map((order, index) => (
-              <View key={order.id || index} style={{ 
-                flexDirection: 'row', 
-                padding: 5, 
+              <View key={order.id || index} style={{
+                flexDirection: 'row',
+                padding: 5,
                 marginBottom: 1,
                 backgroundColor: index % 2 === 0 ? '#ffffff' : '#f8f9fa'
               }}>
@@ -495,7 +495,7 @@ const ExternalOrdersPDF: React.FC<ExternalOrdersPDFProps> = ({
           {/* Simple Footer */}
           <View style={{ marginTop: 30, paddingTop: 10, borderTop: '1 solid #dee2e6', textAlign: 'center' }}>
             <Text style={{ fontSize: 8, color: '#6c757d' }}>
-              Généré par le Système d'Administration El Emana
+              Généré par le Système d'Administration Essafwa
             </Text>
           </View>
         </View>

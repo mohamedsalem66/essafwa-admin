@@ -24,7 +24,7 @@ export default function RootLayout({
     const { i18n } = useTranslation();
 
     useEffect(() => {
-        document.title = "El Emana Optique";
+        document.title = "Essafwa Optique";
     }, []);
 
     useEffect(() => {

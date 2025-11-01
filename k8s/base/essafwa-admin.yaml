@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: elemana-admin
+  name: essafwa-admin
   labels:
-    app: elemana-admin
+    app: essafwa-admin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: elemana-admin
+      app: essafwa-admin
   template:
     metadata:
       labels:
-        app: elemana-admin
+        app: essafwa-admin
     spec:
       imagePullSecrets:
         - name: regcred
       containers:
-      - name: elemana-admin
-        image: ghcr.io/mohamedsalem66/elemana-admin:0.1-SNAPSHOT
+      - name: essafwa-admin
+        image: ghcr.io/mohamedsalem66/essafwa-admin:0.1-SNAPSHOT
         ports:
         - containerPort: 3000
         readinessProbe:
@@ -33,10 +33,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: elemana-admin
+  name: essafwa-admin
 spec:
   ports:
   - port: 80
     targetPort: 3000
   selector:
-    app: elemana-admin
+    app: essafwa-admin

@@ -176,7 +176,7 @@ const resources = {
             "already_have_account": "Already have an account? Sign in",
             "no_account_create_one": "No account? Create one",
             "account_created_successfully": "Account created successfully",
-            "account_created_contact_admin": "Your account has been created successfully. Please contact El Emana Optique to activate your account.",
+            "account_created_contact_admin": "Your account has been created successfully. Please contact Essafwa Optique to activate your account.",
             "Optics": "Optics",
             "Failed to fetch optics. Please try again.": "Failed to fetch optics. Please try again.",
             "Failed to activate optic. Please try again.": "Failed to activate optic. Please try again.",
@@ -199,8 +199,8 @@ const resources = {
             // BoxMenu Keys
             "Extern Orders": "Extern Orders",
             "External order management": "External order management",
-            "Elemana Orders": "Elemana Orders", 
-            "Elemana order management": "Elemana order management",
+            "Essafwa Orders": "Essafwa Orders",
+            "Essafwa order management": "Essafwa order management",
             "CNNAM Orders": "CNAM Orders",
             "CNNAM order management": "CNAM order management",
             "Optics": "Optics",
@@ -224,8 +224,8 @@ const resources = {
             "Failed to create order": "Failed to create order",
             "OK": "OK",
 
-            // Elemana Orders specific keys
-            "Elemana Orders": "Elemana Orders",
+            // Essafwa Orders specific keys
+            "Essafwa Orders": "Essafwa Orders",
             "Send to WhatsApp": "Send to WhatsApp",
             "Automatically send invoice via WhatsApp after order creation": "Automatically send invoice via WhatsApp after order creation",
             "Payment updated successfully": "Payment updated successfully",
@@ -449,7 +449,7 @@ const resources = {
             "already_have_account": "Déjà un compte? Se connecter",
             "no_account_create_one": "Pas de compte? Créer un compte",
             "account_created_successfully": "Compte créé avec succès",
-            "account_created_contact_admin": "Votre compte a été créé avec succès. Veuillez contacter El Emana Optique pour activer votre compte.",
+            "account_created_contact_admin": "Votre compte a été créé avec succès. Veuillez contacter Essafwa Optique pour activer votre compte.",
             "Select Optic": "Sélectionner l'optique",
             "Patient Status": "Statut du patient",
             "RANDOM": "Aléatoire",
@@ -458,8 +458,8 @@ const resources = {
             // BoxMenu Keys
             "Extern Orders": "Commandes Externes",
             "External order management": "Gestion des commandes externes",
-            "Elemana Orders": "Commandes Elemana",
-            "Elemana order management": "Gestion des commandes Elemana",
+            "Essafwa Orders": "Commandes Essafwa",
+            "Essafwa order management": "Gestion des commandes Essafwa",
             "CNNAM Orders": "Commandes CNAM",
             "CNNAM order management": "Gestion des commandes CNAM",
             "Optics": "Optique",
@@ -483,8 +483,8 @@ const resources = {
             "Failed to create order": "Échec de la création de la commande",
             "OK": "OK",
 
-            // Elemana Orders specific keys
-            "Elemana Orders": "Commandes Elemana",
+            // Essafwa Orders specific keys
+            "Essafwa Orders": "Commandes Essafwa",
             "Send to WhatsApp": "Envoyer par WhatsApp",
             "Automatically send invoice via WhatsApp after order creation": "Envoyer automatiquement la facture par WhatsApp après la création de la commande",
             "Payment updated successfully": "Paiement mis à jour avec succès",
@@ -705,7 +705,7 @@ const resources = {
             "already_have_account": "هل لديك حساب بالفعل؟ تسجيل الدخول",
             "no_account_create_one": "ليس لديك حساب؟ إنشاء حساب",
             "account_created_successfully": "تم إنشاء الحساب بنجاح",
-            "account_created_contact_admin": "تم إنشاء حسابك بنجاح. يرجى الاتصال بـ El Emana Optique لتفعيل حسابك.",
+            "account_created_contact_admin": "تم إنشاء حسابك بنجاح. يرجى الاتصال بـ Essafwa Optique لتفعيل حسابك.",
             "Select Optic":"حدد البصريات",
             "Patient Status": "حالة المريض",
             "RANDOM": "عشوائي",
@@ -714,8 +714,8 @@ const resources = {
             // BoxMenu Keys
             "Extern Orders": "الطلبات الخارجية",
             "External order management": "إدارة الطلبات الخارجية",
-            "Elemana Orders": "طلبات الأمــانة",
-            "Elemana order management": "إدارة طلبات الأمــانة",
+            "Essafwa Orders": "طلبات الصفوة",
+            "Essafwa order management": "إدارة طلبات الصفوة",
             "CNNAM Orders": "طلبات الصندوق الوطني",
             "CNNAM order management": "إدارة طلبات الصندوق الوطني",
             "Optics": "البصريات",
@@ -739,8 +739,8 @@ const resources = {
             "Failed to create order": "فشل في إنشاء الطلب",
             "OK": "موافق",
 
-            // Elemana Orders specific keys
-            "Elemana Orders": "طلبات الأمــانة",
+            // Essafwa Orders specific keys
+            "Essafwa Orders": "طلبات الصفوة",
             "Send to WhatsApp": "إرسال عبر واتساب",
             "Automatically send invoice via WhatsApp after order creation": "إرسال الفاتورة تلقائياً عبر واتساب بعد إنشاء الطلب",
             "Payment updated successfully": "تم تحديث الدفع بنجاح",

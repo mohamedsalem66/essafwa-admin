@@ -118,7 +118,7 @@ const AppSidebar: React.FC = () => {
     if (!connectedUser) return []; // Return empty array if no user data
     console.log("Connected user:", connectedUser);
     console.log("User username:", connectedUser.username);
-    
+
     if (connectedUser.username === "36469820") {
       console.log("Showing all menu items for user 36469820");
       return allNavItems; // Show all items for this specific user
@@ -169,7 +169,7 @@ const AppSidebar: React.FC = () => {
                             className={`ml-auto w-5 h-5 transition-transform duration-200  ${
                                 openSubmenu?.type === menuType &&
                                 openSubmenu?.index === index
-                                    ? "rotate-180 text-brand-500"
+                                    ? "rotate-180 text-blue-light-500"
                                     : ""
                             }`}
                         />

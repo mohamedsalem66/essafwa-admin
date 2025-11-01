@@ -38,7 +38,7 @@ const Badge: React.FC<BadgeProps> = ({
   // Updated color schemes to match status blocks
   const variants = {
     light: {
-      primary: "bg-brand-50 text-brand-600 dark:bg-brand-500/15 dark:text-brand-400",
+      primary: "bg-blue-light-50 text-blue-light-600 dark:bg-blue-light-500/15 dark:text-blue-light-400",
       pending: "bg-yellow-50 text-yellow-600 dark:bg-yellow-500/15 dark:text-yellow-400",
       confirmed: "bg-green-50 text-green-600 dark:bg-green-500/15 dark:text-green-400",
       ready: "bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400",
@@ -46,7 +46,7 @@ const Badge: React.FC<BadgeProps> = ({
       canceled: "bg-red-50 text-red-600 dark:bg-red-500/15 dark:text-red-400",
     },
     solid: {
-      primary: "bg-brand-600 text-white dark:bg-brand-500",
+      primary: "bg-blue-light-600 text-white dark:bg-blue-light-500",
       pending: "bg-yellow-500 text-white dark:bg-yellow-500",
       confirmed: "bg-green-500 text-white dark:bg-green-500",
       ready: "bg-blue-500 text-white dark:bg-blue-500",

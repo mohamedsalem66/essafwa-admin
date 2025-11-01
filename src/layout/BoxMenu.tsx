@@ -47,11 +47,11 @@ const allMenuItems: MenuItem[] = [
     )
   },
   {
-    name: "Elemana Orders",
+    name: "Essafwa Orders",
     icon: <BoxCubeIcon />,
-    path: "/elemana-orders",
+    path: "/Essafwa-orders",
     logo: "/images/logo/browser_logo.png",
-    description: "Elemana order management",
+    description: "Essafwa order management",
     color: "bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20",
     backgroundIcon: <BoxCubeIcon />
   },
@@ -101,18 +101,7 @@ const BoxMenu: React.FC = () => {
   // Filter menu items based on user condition
   const getMenuItems = (): MenuItem[] => {
     if (!connectedUser) return [];
-    console.log("Connected user:", connectedUser);
-    console.log("User username:", connectedUser.username);
-
-    if (connectedUser.username === "44630222") {
-      console.log("Showing all menu items for user 36469820");
-      return allMenuItems;
-    } else {
-      console.log("Filtering menu items for regular user");
-      return allMenuItems.filter(item =>
-        item.name === "Extern Orders" || item.name === "Elemana Orders"
-      );
-    }
+    return allMenuItems;
   };
 
   const menuItems = getMenuItems();

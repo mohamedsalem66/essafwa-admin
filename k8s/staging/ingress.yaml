@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: elemana-admin-ingress
+  name: essafwa-admin-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -9,16 +9,16 @@ metadata:
 spec:
   tls:
     - hosts:
-        - admin.elemanaoptique.com
-      secretName: elemana-admin-tls-secret
+        - admin.essafwa.com
+      secretName: essafwa-admin-tls-secret
   rules:
-    - host: admin.elemanaoptique.com
+    - host: admin.essafwa.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: elemana-admin
+                name: essafwa-admin
                 port:
                   number: 80

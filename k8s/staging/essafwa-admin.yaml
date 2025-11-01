@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: essafwa-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: essafwa-admin
+  template:
+    spec:
+      containers:
+        - name: essafwa-admin
+          image: ghcr.io/mohamedsalem66/essafwa-admin:0.2-SNAPSHOT
