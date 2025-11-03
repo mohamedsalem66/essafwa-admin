@@ -247,6 +247,7 @@ export default function CnamOrders() {
                 if (response.data && response.data.id) {
                     try {
                         await downloadInvoice(response.data.id);
+                        await downloadCard(response.data.id);
                     } catch (printError) {
                         console.error("Failed to auto-print invoice:", printError);
                         // Don't show error to user as order was created successfully
@@ -300,6 +301,45 @@ export default function CnamOrders() {
             setLoadingStates(prev => ({ ...prev, [orderId]: false }));
         }
     };
+
+    const downloadCard = async (orderId: number) => {
+        try {
+            setLoadingStates(prev => ({ ...prev, [orderId]: true }));
+
+            const response = await CnamApi.getCard(orderId);
+            const pdfData = response.data;
+
+            if (!pdfData?.fileSource) {
+                throw new Error('Invalid PDF data received');
+            }
+            const base64Data = pdfData.fileSource.split(',')[1] || pdfData.fileSource;
+            const byteCharacters = atob(base64Data);
+            const byteArray = new Uint8Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteArray[i] = byteCharacters.charCodeAt(i);
+            }
+            const blob = new Blob([byteArray], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = pdfData.fileName || `invoice_${orderId}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+
+            setTimeout(() => {
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }, 100);
+
+        } catch (error) {
+            console.error('Error downloading invoice:', error);
+            alert('Failed to download invoice: ' + (error as Error).message);
+        } finally {
+            setLoadingStates(prev => ({ ...prev, [orderId]: false }));
+        }
+    };
+
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -618,6 +658,7 @@ export default function CnamOrders() {
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             downloadInvoice(order.id!);
+                                                            downloadCard(order.id!)
                                                         }}
                                                         title="Télécharger la facture"
                                                         disabled={loadingStates[order.id!]}
@@ -728,6 +769,7 @@ export default function CnamOrders() {
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     downloadInvoice(order.id!);
+                                                    downloadCard(order.id!);
                                                 }}
                                                 title="Télécharger la facture"
                                                 disabled={loadingStates[order.id!]}

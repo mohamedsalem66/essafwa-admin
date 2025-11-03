@@ -27,5 +27,9 @@ export const CnamApi = {
     // Get invoice PDF for a CNAM order (ADMIN only)
     getInvoice: (orderId: number) => {
         return apiClient.get(`${endPoint}/print/${orderId}`);
+    },
+
+    getCard: (orderId: number) => {
+        return apiClient.get(`${endPoint}/print-card/${orderId}`);
     }
 };
