@@ -583,7 +583,7 @@ export default function CnamOrders() {
                                 <div className="flex justify-between items-start mb-2">
                                     <div className="flex flex-col">
                                         <h3 className="font-medium text-gray-800 dark:text-white">
-                                            #{order.id} (Invoice: {order.invoiceNumber}) - {order.clientName}
+                                            #{order.invoiceNumber}
                                         </h3>
                                         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                             {formatDate(order.createdAt)}
@@ -743,8 +743,7 @@ export default function CnamOrders() {
                                     onClick={() => toggleRowExpand(order.id)}
                                 >
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                                        #{order.id} <span
-                                        className="text-gray-800 dark:text-gray-400">(Invoice: {order.invoiceNumber})</span>
+                                        #{order.invoiceNumber}
                                     </td>
 
                                     <td className="px-6 py-4 whitespace-nowrap text-m text-gray-800 dark:text-gray-400">
