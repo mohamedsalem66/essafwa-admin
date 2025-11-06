@@ -44,15 +44,7 @@ interface CnamOrder {
     leftEye: boolean;
     framePrice: number;
     createdAt: string;
-}
-
-interface Category {
-    id: number;
-    name: string;
-    arabicName: string;
-    isExpensive: boolean;
-    amount: number;
-    hasAdd : boolean;
+    cnamDate: string;
 }
 
 interface NewOrderData {
@@ -72,6 +64,16 @@ interface NewOrderData {
     rightEyeEnabled: boolean;
     leftEyeEnabled: boolean;
     totalPaidAmount?: number | null;
+    cnamDate: string;
+}
+
+interface Category {
+    id: number;
+    name: string;
+    arabicName: string;
+    isExpensive: boolean;
+    amount: number;
+    hasAdd : boolean;
 }
 
 const sphereOptions = (() => {
@@ -133,7 +135,8 @@ export default function CnamOrders() {
         framePrice: "",
         rightEyeEnabled: true,
         leftEyeEnabled: true,
-        totalPaidAmount: null
+        totalPaidAmount: null,
+        cnamDate: new Date().toISOString().split('T')[0],
     });
     const [totalPaidAmount, setTotalPrice] = useState<string>("");
     const [totalPaidAmountError, setTotalPriceError] = useState<string>("");
@@ -198,6 +201,7 @@ export default function CnamOrders() {
             rightEyeEnabled: true,
             leftEyeEnabled: true,
             totalPaidAmount: null,
+            cnamDate: new Date().toISOString().split('T')[0],
         });
         setCreateErrors({});
         setCurrentStep(1);
@@ -213,6 +217,9 @@ export default function CnamOrders() {
         if (!validateForm()) return;
         setCreatingOrder(true);
         try {
+
+            const cnamDateTime = `${newOrderData.cnamDate}T00:00:00`;
+
             const payload = {
                 clientName: newOrderData.clientName ? newOrderData.clientName : "",
                 clientTel: newOrderData.clientTel ? newOrderData.clientTel : "",
@@ -229,6 +236,7 @@ export default function CnamOrders() {
                 leftAddition: newOrderData.leftEyeEnabled ? newOrderData.leftAddition : null,
                 rightEye: newOrderData.rightEyeEnabled,
                 leftEye: newOrderData.leftEyeEnabled,
+                cnamDate: cnamDateTime,
                 category: {
                     id: Number(newOrderData.categoryId)
                 }
@@ -360,6 +368,11 @@ export default function CnamOrders() {
 
         const errors: any = {};
 
+        // Add validation for cnamDate
+        if (!newOrderData.cnamDate) {
+            errors.cnamDate = t("CNAM date is required");
+        }
+
         if (!newOrderData.categoryId || newOrderData.categoryId === 0) {
             errors.categoryId = t("Category is required");
         }
@@ -429,6 +442,7 @@ export default function CnamOrders() {
             rightEyeEnabled: true,
             leftEyeEnabled: true,
             totalPaidAmount: null,
+            cnamDate: new Date().toISOString().split('T')[0],
         });
         setCreateErrors({});
         setHasAddForNewCategory(false);
@@ -655,52 +669,52 @@ export default function CnamOrders() {
 
                                 <div className="mt-3 pt-2 border-t border-gray-200 dark:border-gray-600 flex justify-between items-center">
                                     <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            downloadInvoice(order.id!);
-                                                            downloadCard(order.id!)
-                                                        }}
-                                                        title="Télécharger la facture"
-                                                        disabled={loadingStates[order.id!]}
-                                                        className={`text-gray-600 hover:text-[#961767] transition duration-150`}
-                                                    >
-                                                        {loadingStates[order.id!] ? (
-                                                            <div className="relative w-8 h-8">
-                                                                <svg
-                                                                    className="animate-spin h-full w-full text-[#961767]"
-                                                                    viewBox="0 0 24 24"
-                                                                >
-                                                                    <circle
-                                                                        className="opacity-15"
-                                                                        cx="12"
-                                                                        cy="12"
-                                                                        r="10"
-                                                                        stroke="currentColor"
-                                                                        strokeWidth="4"
-                                                                        fill="none"
-                                                                    />
-                                                                    <path
-                                                                        className="opacity-75"
-                                                                        fill="none"
-                                                                        stroke="currentColor"
-                                                                        strokeWidth="4"
-                                                                        strokeLinecap="round"
-                                                                        strokeDasharray="80"
-                                                                        strokeDashoffset="60"
-                                                                        d="M12 2a10 10 0 0 1 10 10"
-                                                                    />
-                                                                </svg>
-                                                                <div
-                                                                    className="absolute inset-0 flex items-center justify-center">
-                                                                    <div
-                                                                        className="w-1 h-1 bg-[#961767] rounded-full"></div>
-                                                                </div>
-                                                            </div>
-                                                        ) : (
-                                                            <HiOutlinePrinter
-                                                                className="w-8 h-8 transition-transform hover:scale-110 hover:text-[#961767]"/>
-                                                        )}
-                                                    </button>
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            downloadInvoice(order.id!);
+                                            downloadCard(order.id!)
+                                        }}
+                                        title="Télécharger la facture"
+                                        disabled={loadingStates[order.id!]}
+                                        className={`text-gray-600 hover:text-[#961767] transition duration-150`}
+                                    >
+                                        {loadingStates[order.id!] ? (
+                                            <div className="relative w-8 h-8">
+                                                <svg
+                                                    className="animate-spin h-full w-full text-[#961767]"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <circle
+                                                        className="opacity-15"
+                                                        cx="12"
+                                                        cy="12"
+                                                        r="10"
+                                                        stroke="currentColor"
+                                                        strokeWidth="4"
+                                                        fill="none"
+                                                    />
+                                                    <path
+                                                        className="opacity-75"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        strokeWidth="4"
+                                                        strokeLinecap="round"
+                                                        strokeDasharray="80"
+                                                        strokeDashoffset="60"
+                                                        d="M12 2a10 10 0 0 1 10 10"
+                                                    />
+                                                </svg>
+                                                <div
+                                                    className="absolute inset-0 flex items-center justify-center">
+                                                    <div
+                                                        className="w-1 h-1 bg-[#961767] rounded-full"></div>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <HiOutlinePrinter
+                                                className="w-8 h-8 transition-transform hover:scale-110 hover:text-[#961767]"/>
+                                        )}
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -846,6 +860,9 @@ export default function CnamOrders() {
                                                         </p>
                                                         <p><span
                                                             className="text-gray-800 dark:text-gray-400">{t("Frame Price")} : </span> {order.framePrice} MRU
+                                                        </p>
+                                                        <p><span
+                                                            className="text-gray-800 dark:text-gray-400">{t("CNAM Date")} : </span> {order.cnamDate ? new Date(order.cnamDate).toLocaleDateString("fr-FR") : '---'}
                                                         </p>
                                                         <p><span
                                                             className="text-gray-800 dark:text-gray-400">{t("Created At")} : </span> {formatDate(order.createdAt)}
@@ -1043,6 +1060,49 @@ export default function CnamOrders() {
                                                 {createErrors.framePrice && (
                                                     <p className="mt-1 text-sm text-red-600 dark:text-red-400">
                                                         {createErrors.framePrice}
+                                                    </p>
+                                                )}
+                                            </div>
+
+                                            <div>
+                                                <Label>{t("CNAM Date")} *</Label>
+                                                <div className="relative">
+                                                    <input
+                                                        type="date"
+                                                        name="cnamDate"
+                                                        value={newOrderData.cnamDate}
+                                                        onChange={handleInputChange}
+                                                        className={`w-full rounded-md border ${createErrors.cnamDate ? "border-red-500" : "border-gray-300 dark:border-gray-600"} p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white h-[42px] pr-10 appearance-none`}
+                                                        required
+                                                        // Force calendar to show on focus
+                                                        onFocus={(e) => e.target.showPicker?.()}
+                                                    />
+                                                    {/* Custom calendar icon */}
+                                                    <div
+                                                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                                                        onClick={() => {
+                                                            const dateInput = document.querySelector('input[name="cnamDate"]') as HTMLInputElement;
+                                                            dateInput?.showPicker?.();
+                                                        }}
+                                                    >
+                                                        <svg
+                                                            className="w-5 h-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth={2}
+                                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                                            />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                {createErrors.cnamDate && (
+                                                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                                                        {createErrors.cnamDate}
                                                     </p>
                                                 )}
                                             </div>
@@ -1253,8 +1313,8 @@ export default function CnamOrders() {
                                                     <div className="flex justify-between">
                                                         <span className="text-gray-600 dark:text-gray-300">{t("Category")}:</span>
                                                         <span className="font-medium">
-                      {categories.find(c => c.id === Number(newOrderData.categoryId))?.name}
-                    </span>
+                                                            {categories.find(c => c.id === Number(newOrderData.categoryId))?.name}
+                                                        </span>
                                                     </div>
                                                     <div className="flex justify-between">
                                                         <span className="text-gray-600 dark:text-gray-300">{t("Verre Price")}:</span>
@@ -1263,6 +1323,12 @@ export default function CnamOrders() {
                                                     <div className="flex justify-between">
                                                         <span className="text-gray-600 dark:text-gray-300">{t("Frame Price")}:</span>
                                                         <span className="font-medium">{newOrderData.framePrice} MRU</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span className="text-gray-600 dark:text-gray-300">{t("CNAM Date")}:</span>
+                                                        <span className="font-medium">
+                                                            {new Date(newOrderData.cnamDate).toLocaleDateString("fr-FR")}
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div className="mt-4 grid grid-cols-2 gap-4">
@@ -1330,8 +1396,8 @@ export default function CnamOrders() {
                                                     <div className="flex justify-between items-center">
                                                         <span className="text-lg font-medium">{t("Total")}:</span>
                                                         <span className="text-lg font-bold">
-                      {Number(newOrderData.paidAmount) + Number(newOrderData.framePrice)} MRU
-                    </span>
+                                                            {Number(newOrderData.paidAmount) + Number(newOrderData.framePrice)} MRU
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>

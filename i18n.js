@@ -491,7 +491,9 @@ const resources = {
             "Pay": "Payer",
             "Next": "Suivant",
             "Created At": "Créé le",
-            "Back to Menu": "Retour au Menu"
+            "Back to Menu": "Retour au Menu",
+            "CNAM Date": "Date CNAM",
+            "CNAM date is required": "La date CNAM est requise"
 
         },
     },
@@ -747,7 +749,9 @@ const resources = {
             "Pay": "دفع",
             "Next": "التالي",
             "Created At": "تم الإنشاء في",
-            "Back to Menu": "العودة إلى القائمة"
+            "Back to Menu": "العودة إلى القائمة",
+            "CNAM Date": "تاريخ CNAM",
+            "CNAM date is required": "تاريخ CNAM مطلوب"
 
 
 
