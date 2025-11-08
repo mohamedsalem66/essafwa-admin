@@ -254,7 +254,6 @@ export default function CnamOrders() {
 
                 if (response.data && response.data.id) {
                     try {
-                        await downloadInvoice(response.data.id);
                         await downloadCard(response.data.id);
                     } catch (printError) {
                         console.error("Failed to auto-print invoice:", printError);
@@ -597,7 +596,7 @@ export default function CnamOrders() {
                                 <div className="flex justify-between items-start mb-2">
                                     <div className="flex flex-col">
                                         <h3 className="font-medium text-gray-800 dark:text-white">
-                                            #{order.invoiceNumber}
+                                            #{order.invoiceNumber} - {order.clientName}
                                         </h3>
                                         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                             {formatDate(order.createdAt)}
@@ -671,7 +670,6 @@ export default function CnamOrders() {
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            downloadInvoice(order.id!);
                                             downloadCard(order.id!)
                                         }}
                                         title="Télécharger la facture"
@@ -781,7 +779,6 @@ export default function CnamOrders() {
                                             <button
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    downloadInvoice(order.id!);
                                                     downloadCard(order.id!);
                                                 }}
                                                 title="Télécharger la facture"
